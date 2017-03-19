@@ -34,17 +34,6 @@ var/
 pip-log.txt
 pip-delete-this-directory.txt
 
-# Unit test / coverage reports
-htmlcov/
-.tox/
-.coverage
-.coverage.*
-.cache
-nosetests.xml
-coverage.xml
-*,cover
-.hypothesis/
-
 # Translations
 *.mo
 *.pot
@@ -52,13 +41,6 @@ coverage.xml
 # Django stuff:
 *.log
 local_settings.py
-
-# Flask stuff:
-instance/
-.webassets-cache
-
-# Scrapy stuff:
-.scrapy
 
 # Sphinx documentation
 docs/_build/
@@ -87,3 +69,9 @@ ENV/
 
 # Rope project settings
 .ropeproject
+
+# static
+static
+
+# DB
+db.sqlite3
