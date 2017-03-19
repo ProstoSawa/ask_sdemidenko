@@ -1,5 +1,10 @@
-{% for q in questions %}
-    <p> {{ q }} </p>
-{% endfor %}
+{% extends "questions_base.html" %}
 
-<p> total: {{ questions|length }} </p>
+{% block content %}
+    {% for q in questions %}
+        <p> {{ q }} </p>
+    {% endfor %}
+
+    <p> total: {{ questions|length }} </p>
+{% endblock content %}
+
