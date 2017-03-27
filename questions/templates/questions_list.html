@@ -7,18 +7,18 @@
 
     <p> total: {{ questions|length }} </p>
 
-    <div class="pagination" style="color: lightpink">
+    <div class="pagination">
         <span class="step-links">
             {% if questions.has_previous %}
-                <a href="?page={{ questions.previous_page_number }}">previous</a>
+                <a href="?page={{ questions.previous_page_number }}"><-</a>
             {% endif %}
 
             <span class="current">
-                Page {{ questions.number }} of {{ questions.paginator.num_pages }}.
+                Page {{ questions.number }} of {{ questions.paginator.num_pages }}
             </span>
 
             {% if questions.has_next %}
-                <a href="?page={{ questions.next_page_number }}">next</a>
+                <a href="?page={{ questions.next_page_number }}">-></a>
             {% endif %}
         </span>
     </div>

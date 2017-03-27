@@ -1,16 +1,12 @@
 # coding=utf-8
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 
-QUESTIONS = {
-    '1': {'id': 1, 'title': 'I`m your dream', 'text': 'I`m your dream, make you real'},
-    '2': {'id': 2, 'title': 'I`m your eyes', 'text': 'I`m your eyes when you must steal'},
-    '3': {'id': 3, 'title': 'I`m your pain', 'text': 'I`m your pain when you can`t feel'},
-}
+from questions.models import Question
 
 
 def questions_list(request):
-    contact_list = QUESTIONS.values()
+    contact_list = Question.objects.filter(is_active=True)
     paginator = Paginator(contact_list, 2)  # По 2 на страницу
 
     page = request.GET.get('page')
@@ -26,4 +22,4 @@ def questions_list(request):
 
 
 def questions_detail(request, question_id):
-    return render(request, 'questions_detail.html', {'question': QUESTIONS.get(question_id, {})})
+    return render(request, 'questions_detail.html', {'question': get_object_or_404(Question, pk=question_id)})
