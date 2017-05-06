@@ -1,5 +1,23 @@
 {% extends "questions_base.html" %}
 
+{% block js %}
+  <script>
+  $(function () {
+      var ws_path = window.location.pathname + "events/";
+      console.log("Connecting to " + ws_path);
+      var webSocketBridge = new channels.WebSocketBridge();
+      webSocketBridge.connect(ws_path);
+      webSocketBridge.listen(function (data) {
+          alert("Wow! New question " + data["title"] + " by " + data["author"])
+      });
+
+  // Помощь в отладке
+  webSocketBridge.socket.onopen = function() { console.log("Connected to notification socket"); };
+  webSocketBridge.socket.onclose = function() { console.log("Disconnected to notification socket"); };
+  })
+  </script>
+{% endblock js %}
+
 {% block content %}
     {% for q in questions %}
         <p> {{ q }} </p>
