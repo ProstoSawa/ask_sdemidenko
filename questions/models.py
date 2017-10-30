@@ -11,6 +11,13 @@ class User(AbstractUser):
     upload = models.ImageField(upload_to='uploads/%Y/%m/%d/')
 
 
+class Tag(models.Model):
+    title = models.CharField(max_length=120, verbose_name=u"Заголовок ярлыка")
+
+    def __str__(self):
+        return self.title
+
+
 class Question(models.Model):
     author = models.ForeignKey(User)
 
@@ -21,7 +28,9 @@ class Question(models.Model):
 
     is_active = models.BooleanField(default=True, verbose_name=u"Доступность вопроса")
 
-    def __unicode__(self):
+    tags = models.ManyToManyField(Tag, blank=True)
+
+    def __str__(self):
         return self.title
 
     class Meta:

@@ -1,24 +1,13 @@
 # coding=utf-8
-from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.shortcuts import render, get_object_or_404
+from django.views.generic import ListView
 
 from questions.models import Question
 
 
-def questions_list(request):
-    contact_list = Question.objects.filter(is_active=True)
-    paginator = Paginator(contact_list, 2)  # По 2 на страницу
-
-    page = request.GET.get('page')
-    try:
-        questions = paginator.page(page)
-    except PageNotAnInteger:
-        # В случае, GET параметр не число
-        questions = paginator.page(1)
-    except EmptyPage:
-        questions = paginator.page(paginator.num_pages)
-
-    return render(request, 'questions_list.html', {'questions': questions})
+class QuestionList(ListView):
+    model = Question
+    paginate_by = 1
 
 
 def questions_detail(request, question_id):
