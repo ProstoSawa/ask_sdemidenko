@@ -5,24 +5,19 @@
 
     <script src="{% static "questions/js/pushstream.js" %}" type="text/javascript" language="javascript" charset="utf-8"></script>
     <script type="text/javascript" language="javascript" charset="utf-8">
-    // <![CDATA[
-    function messageReceived(text, id, channel) {
-      console.log(id);
-      console.log(text);
-      console.log(channel);
-    }
-
-    var pushstream = new PushStream({
-      host: "http://controller.sdemidenko.notkube.dev.ivi.ru",
-      port: 80,
-      modes: "websocket",
-      channelsByArgument: true,
-      channelsArgument: 'channels' //this is the default value, you have to change it to be the same value used on push_stream_channels_path directive
-    });
-    pushstream.onmessage = messageReceived;
-    pushstream.addChannel('ch1');
-        pushstream.connect();
-    // ]]>
+    var socket = new WebSocket('ws://controller.sdemidenko.notkube.dev.ivi.ru:8888/listen/tp_test_01');
+    socket.onopen = function(event) {
+        console.log('ws opened');
+        var data = JSON.stringify({ message: "Hello WebSocket" });
+        socket.send(data);
+    };
+    socket.onmessage = function(event) {
+        var resp = JSON.parse(event.data);
+        console.log('ws message', resp.msg);
+    };
+    socket.onclose = function(event) {
+        console.log('ws closed')
+    };
     </script>
 
 {% endblock %}
