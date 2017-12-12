@@ -1,5 +1,33 @@
 {% extends "questions_base.html" %}
 
+{%  block js %}
+    {% load static %}
+
+    <script src="{% static "questions/js/pushstream.js" %}" type="text/javascript" language="javascript" charset="utf-8"></script>
+    <script type="text/javascript" language="javascript" charset="utf-8">
+    // <![CDATA[
+    function messageReceived(text, id, channel) {
+      console.log(id);
+      console.log(text);
+      console.log(channel);
+    }
+
+    var pushstream = new PushStream({
+      host: "http://controller.sdemidenko.notkube.dev.ivi.ru",
+      port: 80,
+      modes: "websocket",
+      channelsByArgument: true,
+      channelsArgument: 'channels' //this is the default value, you have to change it to be the same value used on push_stream_channels_path directive
+    });
+    pushstream.onmessage = messageReceived;
+    pushstream.addChannel('ch1');
+        pushstream.connect();
+    // ]]>
+    </script>
+
+{% endblock %}
+
+
 {% block content %}
     {% for q in object_list %}
         <p> <a href="{% url 'questions_detail' question_id=q.id %}">{{ q }}</a> </p>
