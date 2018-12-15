@@ -3,8 +3,11 @@ from __future__ import unicode_literals
 
 from datetime import datetime
 
+import requests
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 
 class User(AbstractUser):
@@ -19,7 +22,7 @@ class Tag(models.Model):
 
 
 class Question(models.Model):
-    author = models.ForeignKey(User)
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
 
     title = models.CharField(max_length=120, verbose_name=u"Заголовок вопроса")
     text = models.TextField(verbose_name=u"Полное описание вопроса")
@@ -35,3 +38,8 @@ class Question(models.Model):
 
     class Meta:
         ordering = ['-create_date']
+
+@receiver(post_save, sender=Question)
+def renewal(sender, instance, created, **kwargs):
+    if created:
+        requests.post("http://localhost:8006/create/message", data={"message": instance.id})
