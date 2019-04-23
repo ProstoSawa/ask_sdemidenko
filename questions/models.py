@@ -19,7 +19,7 @@ class Tag(models.Model):
 
 
 class Question(models.Model):
-    author = models.ForeignKey(User)
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
 
     title = models.CharField(max_length=120, verbose_name=u"Заголовок вопроса")
     text = models.TextField(verbose_name=u"Полное описание вопроса")
