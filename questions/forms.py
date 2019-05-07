@@ -14,7 +14,7 @@ class QuestionForm(forms.ModelForm):
     #
     # is_active = models.BooleanField(default=True, verbose_name=u"Доступность вопроса")
     #
-    tags = forms.CharField(label='Tags', max_length=120)
+    tags = forms.CharField(label='Tags', max_length=120, widget=forms.TextInput(attrs={'size':'40', 'class': 'super'}))
 
     def clean(self):
         cleaned_data = super(QuestionForm, self).clean()

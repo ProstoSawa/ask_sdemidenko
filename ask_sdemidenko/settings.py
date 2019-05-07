@@ -122,4 +122,6 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+STATIC_ROOT = "/tmp/ask.com/"
+
 AUTH_USER_MODEL = 'questions.User'
