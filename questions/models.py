@@ -38,8 +38,3 @@ class Question(models.Model):
 
     class Meta:
         ordering = ['-create_date']
-
-@receiver(post_save, sender=Question)
-def renewal(sender, instance, created, **kwargs):
-    if created:
-        requests.post("http://localhost:8006/create/message", data={"message": instance.id})

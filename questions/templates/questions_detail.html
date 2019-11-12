@@ -3,6 +3,17 @@
 {% block content %}
     <p> {{ question }} </p>
     <p> {{ question.tags.all|join:", " }} </p>
+
+    <form method="POST" action="/qwe/123 ">
+        {% csrf_token %}
+
+        {{ form.as_p }}
+        manually
+        <div class="p">{{ form.title }}</div>
+
+        <button type="submit">Save</button>
+    </form>
+
 {% endblock content %}
 
 
